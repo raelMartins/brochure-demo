@@ -281,6 +281,7 @@ export const DepositWallet = ({step, setStep, setPage, onWalClose}) => {
               focusBorderColor="transparent"
               placeholder="0.00"
               bg="transparent"
+              pl={`30px`}
             />
           </Stack>
 

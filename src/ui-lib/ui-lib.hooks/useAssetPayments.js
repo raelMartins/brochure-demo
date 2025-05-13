@@ -265,6 +265,7 @@ export const useAssetPayment = ({
     paymentStep,
     setPaymentStep,
     trasferDetails,
+    transferDetails: trasferDetails,
     setTransferDetails,
     formattedAmount,
     isAboveLimit,

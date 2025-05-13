@@ -75,7 +75,7 @@ export const PaymentMethod = ({
             onClick={handlePaywithCard}
             type="Debit/Credit Card"
             variation="primary"
-            subHeading="USE CARD TO COMLETE PAYMENT"
+            subHeading="USE CARD TO COMPLETE PAYMENT"
             tag="Charges Apply"
           />
         </Stack>

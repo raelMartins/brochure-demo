@@ -6,8 +6,6 @@ import {
   useToast,
   Flex,
   Stack,
-  useMediaQuery,
-  SlideFade,
   Divider,
   useTheme,
   Center,
@@ -16,15 +14,11 @@ import {useInfiniteQuery} from 'react-query';
 import {useEffect, useRef, useState} from 'react';
 import {Drawer, DrawerOverlay, DrawerContent, Box} from '@chakra-ui/react';
 import {CloseIcon} from '@chakra-ui/icons';
-import {fetchUserEquity} from '../../../api/listing';
-// import ErrorState from '../appState/error-state';
-// import EmptyState from '../appState/empty-state';
+import {fetchUserEquity} from '@/api/listing';
 import thinArrow from '/src/images/icons/thinArrow.svg';
 import {useRouter} from 'next/navigation';
-import {Spinner} from '@/ui-lib/ui-lib.components/Spinner';
 import ErrorState from '@/components/appState/error-state';
 import EmptyState from '@/components/appState/empty-state';
-import {useLightenHex} from '@/utils/lightenColorShade';
 import {Footer} from '@/components/page_layout/Footer';
 import MobileHeader from '@/components/navbar/mobile_header';
 import {drawer_styles, drawer_title_styles} from '../styles';
@@ -138,7 +132,6 @@ export const Portfolio = ({isAssetOpen, onAssetClose, onDrawerOpen}) => {
 
   const theme = useTheme();
   const primaryColor = theme.colors.primary?.color;
-  const {lightenHex} = useLightenHex(primaryColor);
 
   return (
     <Drawer
@@ -167,20 +160,15 @@ export const Portfolio = ({isAssetOpen, onAssetClose, onDrawerOpen}) => {
         ) : isError ? (
           <ErrorState />
         ) : (
-          <Box
-            px={3}
-            my={{base: '10px', md: '15px'}}
-            overflowY={'auto'}
-            scrollBehavior={'smooth'}
-            className="hide_scroll"
-            ref={readScollToRef1}
-            id="assetsWrap"
-            onScroll={handleScroll}
-            h="full"
-          >
+          <Box px={3} my={{base: '10px', md: '15px'}} overflowY={'auto'} onScroll={handleScroll}>
             {USER_EQUITY?.length > 0 ? (
               <>
-                <Stack>
+                <Stack
+                  scrollBehavior={'smooth'}
+                  className="hide_scroll"
+                  ref={readScollToRef1}
+                  id="assetsWrap"
+                >
                   <Stack spacing="14px" alignItems={'center'}>
                     {(USER_EQUITY || [])?.map((equity, idx) => (
                       <Flex
@@ -244,6 +232,11 @@ export const Portfolio = ({isAssetOpen, onAssetClose, onDrawerOpen}) => {
                         </Center>
                       </Flex>
                     ))}
+                    {isFetchingNextPage && (
+                      <Center p={`10px`}>
+                        <ThreeDots boxSize={`16px`} />
+                      </Center>
+                    )}
 
                     <ScrollToTop shouldScroll={shouldScroll} scrollToTop={scrollToTop} />
                   </Stack>

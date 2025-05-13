@@ -1,7 +1,10 @@
 import {fetchOffers} from '@/api/listing';
 import {LayoutView} from '@/components';
 import {PropertyImageDisplay} from '@/components/page-components/listings/PropertyImageDisplay';
+import {PropertySidebar} from '@/components/page-components/listings/PropertySidebar';
 import {OfferPurchaseFlow} from '@/components/page-components/units/OfferPurchaseFlow';
+import {PurchaseFlow} from '@/components/page-components/units/PurchaseFlow';
+import {ExternalLink} from '@/ui-lib';
 
 import {Box, Flex, Heading, HStack, Show, Stack, Text} from '@chakra-ui/react';
 import Link from 'next/link';
@@ -14,6 +17,7 @@ export default function OfferPage({params}) {
   const offerId = router?.query?.offer_id;
   const pendingQuery = useQuery(['fetchUserEquity', 'OFFERS'], fetchOffers, {refetchOnMount: true});
   const assetData = pendingQuery?.data?.data?.data;
+  console.log({assetData});
   const assetToUse = assetData?.find(asset => `${asset?.id}` === `${offerId}`);
   const property = assetToUse?.project;
   const unit = assetToUse?.unit;

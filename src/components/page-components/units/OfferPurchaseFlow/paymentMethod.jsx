@@ -65,7 +65,7 @@ export const PaymentMethod = ({
         typeColor="#FFFFFF"
         tagColor="#F5F5F5"
         subHeadingColor="#F5F5F5"
-        subHeading="USE CARD TO COMLETE PAYMENT"
+        subHeading="USE CARD TO COMPLETE PAYMENT"
         tag="Charges Apply"
       />
     </Stack>

@@ -177,12 +177,19 @@ const TransactionInfo = ({equityInfo, transactionInfo}) => {
                 </Text>
                 {/* {equityInfo?.payment_plan?.plan_type === 'custom' ? ( */}
                 {equityInfo?.payment_plan ? (
-                  <HStack role="button" onClick={drawerDisclosure.onOpen} spacing="3px">
+                  <HStack
+                    role="button"
+                    onClick={drawerDisclosure.onOpen}
+                    spacing="3px"
+                    justify={`center`}
+                    flexWrap={`wrap`}
+                  >
                     <Text
                       textTransform="uppercase"
                       color="custom_color.color_pop"
                       fontSize={{md: '10px', base: '8px'}}
                       fontWeight="400"
+                      textAlign={`center`}
                     >
                       View Payment Breakdown
                     </Text>

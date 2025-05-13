@@ -87,7 +87,7 @@ export const FractionalPaymentMethod = ({
           <PaymentTypeCard
             onClick={handlePaywithCard}
             type="Debit/Credit Card"
-            subHeading="USE CARD TO COMLETE PAYMENT"
+            subHeading="USE CARD TO COMPLETE PAYMENT"
             tag="Charges Apply"
           />
         </Stack>

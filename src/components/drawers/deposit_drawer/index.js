@@ -55,17 +55,6 @@ const MakeDepositDrawer = ({depositModal, refetch, info}) => {
     modal: depositModal,
     paymentDetails,
   });
-  const {onCopy} = useClipboard(transferDetails?.account_number ?? '');
-  const handleCopy = () => {
-    onCopy();
-    return toast({
-      title: 'Account Number Copied!',
-      status: 'info',
-      duration: 1500,
-      isClosable: true,
-      position: 'top-right',
-    });
-  };
 
   const handleSelect = el => {
     setSelectedMethod(el);
@@ -146,7 +135,6 @@ const MakeDepositDrawer = ({depositModal, refetch, info}) => {
           amount={amount}
           isLoading={isLoading}
           transferDetails={transferDetails}
-          handleCopy={handleCopy}
           setStep={setStep}
         />
       )}

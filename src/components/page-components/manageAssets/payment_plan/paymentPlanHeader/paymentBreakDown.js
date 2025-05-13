@@ -11,6 +11,7 @@ import {Spinner} from '@/ui-lib/ui-lib.components/Spinner';
 import {formatToCurrency} from '@/utils/formatAmount';
 import {changeDateFormat} from '@/utils/formatDate';
 import {useLightenHex} from '@/utils/lightenColorShade';
+import {displayTransactionTitle} from '@/utils/misc';
 import {
   Box,
   Center,
@@ -78,26 +79,6 @@ const CustomPaymentBreakdownForAssets = ({equityInfo, modalDisclosure}) => {
   };
 
   // toastForError(customPlanBreakDown.error, customPlanBreakDown.isError, toast);
-
-  function getOrdinal(number) {
-    if (typeof number !== 'number') {
-      return ''; // Return an empty string for invalid inputs
-    }
-
-    const suffixes = ['th', 'st', 'nd', 'rd'];
-    const lastDigit = number % 10;
-    const lastTwoDigits = number % 100;
-
-    // Special cases for 11, 12, and 13, as they don't follow the usual pattern
-    if (lastTwoDigits === 11 || lastTwoDigits === 12 || lastTwoDigits === 13) {
-      return number + 'th';
-    }
-
-    // Use the appropriate suffix based on the last digit
-    const suffix = suffixes[lastDigit] || 'th';
-
-    return number + suffix;
-  }
 
   const FEES_ARRAY = equityInfo?.equity_fees || FEES || [];
   // const FEES_ARRAY = FEES;
@@ -175,9 +156,7 @@ const CustomPaymentBreakdownForAssets = ({equityInfo, modalDisclosure}) => {
                 {HISTORY?.map((item, idx) => (
                   <HStack {...list_item_style} key={idx}>
                     <Text fontSize={'14px'}>
-                      {item?.transaction_action_type?.toLowerCase()?.includes(`initial`)
-                        ? `Initial Deposit`
-                        : `${getOrdinal(idx + 1)} payment`}{' '}
+                      {displayTransactionTitle({data: item, index: idx + 1})}
                     </Text>
                     <Stack gap={`3px`} textAlign={`right`}>
                       <Text fontSize={'19x'} fontWeight={500}>
@@ -193,7 +172,10 @@ const CustomPaymentBreakdownForAssets = ({equityInfo, modalDisclosure}) => {
                   UPCOMING?.map((item, idx) => (
                     <HStack {...list_item_style} key={idx}>
                       <Text fontSize={'14px'}>
-                        {getOrdinal((HISTORY?.length || 0) + idx + 1)} payment
+                        {displayTransactionTitle({
+                          data: item,
+                          index: (HISTORY?.length || 0) + idx + 1,
+                        })}
                       </Text>
                       <Stack gap={`3px`} textAlign={`right`}>
                         <Text fontSize={'19x'} fontWeight={500}>

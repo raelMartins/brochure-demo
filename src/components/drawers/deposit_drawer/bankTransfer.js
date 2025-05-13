@@ -1,88 +1,110 @@
 import {calculateFee} from '@/utils/calculateFee';
 import {CopyIcon} from '@chakra-ui/icons';
-import {Box, Center, Flex, Image, Stack, Text} from '@chakra-ui/react';
+import {Box, Center, Flex, HStack, Image, Stack, Text, useToast, VStack} from '@chakra-ui/react';
 import processingLoader from '../../../images/processing-transaction.gif';
+import ThreeDots from '@/components/loaders/ThreeDots';
+import {ToastTemplate} from '@/components/fullScreenPrerequisites/toastTemplate';
+import {useState} from 'react';
 
-export const BankTransfer = ({amount, isLoading, transferDetails, handleCopy, setStep}) => {
+export const BankTransfer = ({isLoading, transferDetails}) => {
+  const toast = useToast();
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator?.clipboard?.writeText(transferDetails?.account_number);
+    toast({
+      render: () => <ToastTemplate title={`Success!`} description={'Account Number Copied!'} />,
+      duration: 1500,
+      isClosable: true,
+      position: 'top-right',
+    });
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 3000);
+    return;
+  };
+
   return (
     <>
       {isLoading ? (
-        <Center mt="20px" w="full" h="full" flexDirection={'column'}>
-          <Image alt="loader" w="150px" h="150px" src={processingLoader.src} />
-          <Text
-            color="text"
-            textAlign={'center'}
-            fontWeight={{base: 600, md: 400}}
-            fontSize={'24px'}
-            my={{base: '12px', md: '16px'}}
-          >
-            Fetching bank details
-          </Text>
-          <Text color="text" opacity={0.8} fontSize={{base: '14px', md: '16px'}} fontWeight="400">
-            Wait a moment
-          </Text>
+        <Center minH={`300px`} flexDirection={'column'}>
+          <ThreeDots boxSize={{base: `15px`, lg: `30px`}} circular />
         </Center>
       ) : (
         <Box p="20px" w="full">
           <Stack
-            p="24px 14px"
-            w="full"
-            maxH="91px"
-            border="1px solid"
-            borderColor={'custom_color.color_pop'}
-            bg={`custom_color.opacity_pop._20`}
-            align={'center'}
-            justify={'center'}
-            gapp="2px"
-          >
-            <Text color="text" fontSize={'12px'} fontWeight={400} textTransform="uppercase">
-              amount to deposit
-            </Text>
-            <Text color="matador_text.300" fontSize="16px" fontWeight={500}>
-              {calculateFee(amount)}
-            </Text>
-          </Stack>
-          <Stack
             w="full"
             color="text"
-            my="22px"
             minH="100px"
             justify={'center'}
             align="center"
-            gap="23px"
+            gap="16px"
             border="1px solid"
             borderColor={'custom_color.color_pop'}
             bg={`custom_color.opacity_pop._20`}
-            p="14px"
+            p="20px"
           >
-            <Box w="full">
-              <Flex
-                w="full"
-                maxW="140px"
-                mx="auto"
-                p="8px"
-                justify={'space-between'}
-                align={'center'}
-                rounded="4px"
+            <VStack gap={`5px`}>
+              <Text
+                fontWeight={`400`}
+                fontSize={`11.62px`}
+                lineHeight={`140%`}
+                letterSpacing={`1%`}
+                textTransform={`uppercase`}
               >
-                <Stack w="full" justify="center" textAlign={'center'} gap={0}>
-                  <Text fontSize={'10px'} fontWeight={500}>
-                    {transferDetails?.account_bank_name ?? '-'}
-                  </Text>
-                  <Text fontSize={'14px'} fontWeight={600} letterSpacing={'0.12px'}>
-                    {transferDetails?.account_number ?? '02'}
-                  </Text>
-                </Stack>
-                <CopyIcon
-                  onClick={handleCopy}
-                  fontSize={'15'}
-                  color="#FFFFFF"
-                  cursor="pointer"
-                  boxSize={4}
-                />
-              </Flex>
-            </Box>
-            <Text fontWeight={500}>Account Name: {transferDetails?.account_name}</Text>
+                Bank
+              </Text>
+              <Text
+                fontWeight={`500`}
+                fontSize={`13.56px`}
+                lineHeight={`140%`}
+                letterSpacing={`1%`}
+              >
+                {transferDetails?.account_bank_name ?? '--'}
+              </Text>
+            </VStack>
+            <VStack gap={`5px`}>
+              <Text
+                fontWeight={`400`}
+                fontSize={`11.62px`}
+                lineHeight={`140%`}
+                letterSpacing={`1%`}
+                textTransform={`uppercase`}
+              >
+                Account Number
+              </Text>
+              <HStack justify={`center`} gap={`15px`} onClick={handleCopy} cursor={`pointer`}>
+                <Text
+                  fontWeight={`500`}
+                  fontSize={`13.56px`}
+                  lineHeight={`140%`}
+                  letterSpacing={`1%`}
+                >
+                  {transferDetails?.account_number ?? '--'}
+                </Text>
+                <CopyIcon color={copied ? `custom_color.color_pop` : `text`} />
+              </HStack>
+            </VStack>
+            <VStack gap={`5px`}>
+              <Text
+                fontWeight={`400`}
+                fontSize={`11.62px`}
+                lineHeight={`140%`}
+                letterSpacing={`1%`}
+                textTransform={`uppercase`}
+              >
+                Account Name
+              </Text>
+              <Text
+                fontWeight={`500`}
+                fontSize={`13.56px`}
+                lineHeight={`140%`}
+                letterSpacing={`1%`}
+              >
+                {transferDetails?.account_name ?? '--'}
+              </Text>
+            </VStack>
           </Stack>
         </Box>
       )}

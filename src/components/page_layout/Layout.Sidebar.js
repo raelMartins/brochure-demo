@@ -97,7 +97,7 @@ export const LayoutSidebar = () => {
           return (
             <PaymentAccess
               key={item?.key}
-              // checkWallet={item?.name === `Wallet`}
+              checkWallet={item?.name?.toLowerCase()?.includes(`wallet`)}
               content={
                 <Tooltip key={item?.key} label={item?.name} placement="top" sx={icon_tooltip_style}>
                   <Box as="span" onClick={item?.onClick}>

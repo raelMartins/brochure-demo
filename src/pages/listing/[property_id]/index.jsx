@@ -53,6 +53,11 @@ export default function ListingPage({}) {
     <LayoutView
       isLoading={projectQuery?.isLoading}
       rightNavigation={<PropertySidebar property_id={property?.id} />}
+      metaData={{
+        title: property?.name,
+        description: property?.description,
+        image: property?.photos?.[0],
+      }}
     >
       {projectQuery?.isError ? (
         <ErrorState />

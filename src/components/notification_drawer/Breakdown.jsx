@@ -15,26 +15,6 @@ const Breakdown = ({onNotClose, asset, customScrollbarStyles, setType}) => {
     }
   );
 
-  function getOrdinal(number) {
-    if (typeof number !== 'number') {
-      return ''; // Return an empty string for invalid inputs
-    }
-
-    const suffixes = ['th', 'st', 'nd', 'rd'];
-    const lastDigit = number % 10;
-    const lastTwoDigits = number % 100;
-
-    // Special cases for 11, 12, and 13, as they don't follow the usual pattern
-    if (lastTwoDigits === 11 || lastTwoDigits === 12 || lastTwoDigits === 13) {
-      return number + 'th';
-    }
-
-    // Use the appropriate suffix based on the last digit
-    const suffix = suffixes[lastDigit] || 'th';
-
-    return number + suffix;
-  }
-
   return (
     <Box px="24px" pb="38px" h={'fit-content'}>
       <Flex w="full" justify={'space-between'} align={'center'} pt={'28px'}>
@@ -103,10 +83,10 @@ const Breakdown = ({onNotClose, asset, customScrollbarStyles, setType}) => {
                 border="1px solid"
                 borderColor={'border.1'}
               >
-                <Text color="text.3" fontSize={'13px'} fontWeight={500}>
-                  {getOrdinal(idx + 1)} payment
+                <Text color="matador_text.300" fontSize={'13px'} fontWeight={500}>
+                  {displayTransactionTitle({data: item, index: idx + 1})}
                 </Text>
-                <Text color="text.3" fontSize={'19x'} fontWeight={500}>
+                <Text color="matador_text.300" fontSize={'19x'} fontWeight={500}>
                   {item?.amount ? formatToCurrency(item?.amount) : '-'}
                 </Text>
 
